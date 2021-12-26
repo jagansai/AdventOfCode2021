@@ -14,7 +14,7 @@ public final class Day01 {
 		int count = 0;
 		for (int i = 0; i < reports.size(); i++) {
 			if (i != 0 && prev < reports.get(i)) {
-					++count;
+				++count;
 			}
 			prev = reports.get(i);
 		}
