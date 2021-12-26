@@ -31,8 +31,9 @@ record DirectionValue(Direction direction, int value) {
 }
 
 public class Day02 {
+	public static final String MOVE_RESULT_STR = "Horizontal Position: %d, Depth: %d";
 
-	private static void move(final List<String> commands) {
+	public static String move(final List<String> commands) {
 		int horizontalPos = 0;
 		int depth = 0;
 
@@ -52,11 +53,11 @@ public class Day02 {
 					depth = Direction.calculateValue(Direction.Down, value, depth);
 			}
 		}
-		System.out.println(String.format("Horizontal Position: %d, Depth: %d", horizontalPos, depth));
+		return String.format(MOVE_RESULT_STR, horizontalPos, depth);
 	}
 
 	public static void main(String[] args) {
 		final List<String> commands = Arrays.asList("forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2");
-		Day02.move(commands);
+		System.out.println(Day02.move(commands));
 	}
 }
