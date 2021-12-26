@@ -13,12 +13,10 @@ public final class Day01 {
 		int prev = Integer.MIN_VALUE;
 		int count = 0;
 		for (int i = 0; i < reports.size(); i++) {
-			if (i != 0) {
-				if (prev < reports.get(i)) {
+			if (i != 0 && prev < reports.get(i)) {
 					++count;
-				}
-				prev = reports.get(i);
 			}
+			prev = reports.get(i);
 		}
 		return count;
 	}
