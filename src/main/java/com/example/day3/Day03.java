@@ -4,10 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiPredicate;
 
+record GreaterAndLesser(char greater, char lesser) {
+}
+
 public class Day03 {
 
-    private static char getMostOrLeastCommonBit(final List<String> report, final int position,
-            final BiPredicate<Integer, Integer> commonalityTest) {
+    private static GreaterAndLesser getMostOrLeastCommonBit(final List<String> report, final int position,
+            final BiPredicate<Integer, Integer> greaterThan, final BiPredicate<Integer, Integer> lessthan) {
 
         int zeros = 0;
         int ones = 0;
@@ -20,7 +23,7 @@ public class Day03 {
                 ++ones;
             }
         }
-        return commonalityTest.test(zeros, ones) ? '0' : '1';
+        return new GreaterAndLesser(greaterThan.test(zeros, ones) ? '0' : '1', lessthan.test(zeros, ones) ? '0' : '1');
     }
 
     public static int calculatePowerConsumption(final List<String> report) {
@@ -33,8 +36,11 @@ public class Day03 {
         final int columnSize = report.get(0).length();
 
         for (int i = 0; i < columnSize; ++i) {
-            gammaRateStr += getMostOrLeastCommonBit(report, i, (x, y) -> x.compareTo(y) > 0);
-            epsilonRateStr += getMostOrLeastCommonBit(report, i, (x, y) -> x.compareTo(y) < 0);
+
+            final var greaterAndLesser = getMostOrLeastCommonBit(report, i, (x, y) -> x.compareTo(y) > 0,
+                    (x, y) -> x.compareTo(y) < 0);
+            gammaRateStr += greaterAndLesser.greater();
+            epsilonRateStr += greaterAndLesser.lesser();
         }
         return Integer.parseInt(gammaRateStr, 2) * Integer.parseInt(epsilonRateStr, 2);
     }
